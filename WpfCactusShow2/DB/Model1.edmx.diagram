@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="69e691e403544678aaa2df5302b0b6d3" Name="Diagram1">
+        <EntityTypeShape EntityType="Kaktus_vistavkaModel.Cactus" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kaktus_vistavkaModel.Kind" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kaktus_vistavkaModel.Location" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kaktus_vistavkaModel.Show" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kaktus_vistavkaModel.Show_cactus" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kaktus_vistavkaModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="Kaktus_vistavkaModel.FK_Cactus_Kind" ManuallyRouted="false" />
+        <AssociationConnector Association="Kaktus_vistavkaModel.FK_Show_cactus_Cactus" ManuallyRouted="false" />
+        <AssociationConnector Association="Kaktus_vistavkaModel.FK_Show_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="Kaktus_vistavkaModel.FK_Show_cactus_Show" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

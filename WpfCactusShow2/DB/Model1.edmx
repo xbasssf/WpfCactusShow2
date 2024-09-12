@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Kaktus_vistavkaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cactus">
+          <Key>
+            <PropertyRef Name="Id_cactus" />
+          </Key>
+          <Property Name="Id_cactus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_kind" Type="int" />
+          <Property Name="Origin" Type="nvarchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Kind">
+          <Key>
+            <PropertyRef Name="Id_kind" />
+          </Key>
+          <Property Name="Id_kind" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Instruction" Type="text" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id_loc" />
+          </Key>
+          <Property Name="Id_loc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Show">
+          <Key>
+            <PropertyRef Name="Id_show" />
+          </Key>
+          <Property Name="Id_show" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Id_loc" Type="int" />
+        </EntityType>
+        <EntityType Name="Show_cactus">
+          <Key>
+            <PropertyRef Name="Id_sc" />
+          </Key>
+          <Property Name="Id_sc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_show" Type="int" />
+          <Property Name="Id_cactus" Type="int" />
+          <Property Name="Prize" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comment" Type="text" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Cactus_Kind">
+          <End Role="Kind" Type="Self.Kind" Multiplicity="0..1" />
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kind">
+              <PropertyRef Name="Id_kind" />
+            </Principal>
+            <Dependent Role="Cactus">
+              <PropertyRef Name="Id_kind" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Show_cactus_Cactus">
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Show_cactus" Type="Self.Show_cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cactus">
+              <PropertyRef Name="Id_cactus" />
+            </Principal>
+            <Dependent Role="Show_cactus">
+              <PropertyRef Name="Id_cactus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Show_cactus_Show">
+          <End Role="Show" Type="Self.Show" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Show_cactus" Type="Self.Show_cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Show">
+              <PropertyRef Name="Id_show" />
+            </Principal>
+            <Dependent Role="Show_cactus">
+              <PropertyRef Name="Id_show" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Show_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Show" Type="Self.Show" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id_loc" />
+            </Principal>
+            <Dependent Role="Show">
+              <PropertyRef Name="Id_loc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Kaktus_vistavkaModelContainer">
+          <EntitySet Name="Cactus" EntityType="Self.Cactus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kind" EntityType="Self.Kind" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Show" EntityType="Self.Show" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Show_cactus" EntityType="Self.Show_cactus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cactus_Kind" Association="Self.FK_Cactus_Kind">
+            <End Role="Kind" EntitySet="Kind" />
+            <End Role="Cactus" EntitySet="Cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Show_cactus_Cactus" Association="Self.FK_Show_cactus_Cactus">
+            <End Role="Cactus" EntitySet="Cactus" />
+            <End Role="Show_cactus" EntitySet="Show_cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Show_cactus_Show" Association="Self.FK_Show_cactus_Show">
+            <End Role="Show" EntitySet="Show" />
+            <End Role="Show_cactus" EntitySet="Show_cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Show_Location" Association="Self.FK_Show_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Show" EntitySet="Show" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Kaktus_vistavkaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cactus">
+          <Key>
+            <PropertyRef Name="Id_cactus" />
+          </Key>
+          <Property Name="Id_cactus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_kind" Type="Int32" />
+          <Property Name="Origin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Price" Type="Int32" />
+          <NavigationProperty Name="Kind" Relationship="Self.FK_Cactus_Kind" FromRole="Cactus" ToRole="Kind" />
+          <NavigationProperty Name="Show_cactus" Relationship="Self.FK_Show_cactus_Cactus" FromRole="Cactus" ToRole="Show_cactus" />
+        </EntityType>
+        <EntityType Name="Kind">
+          <Key>
+            <PropertyRef Name="Id_kind" />
+          </Key>
+          <Property Name="Id_kind" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Instruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cactus" Relationship="Self.FK_Cactus_Kind" FromRole="Kind" ToRole="Cactus" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id_loc" />
+          </Key>
+          <Property Name="Id_loc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Show" Relationship="Self.FK_Show_Location" FromRole="Location" ToRole="Show" />
+        </EntityType>
+        <EntityType Name="Show">
+          <Key>
+            <PropertyRef Name="Id_show" />
+          </Key>
+          <Property Name="Id_show" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Id_loc" Type="Int32" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Show_Location" FromRole="Show" ToRole="Location" />
+          <NavigationProperty Name="Show_cactus" Relationship="Self.FK_Show_cactus_Show" FromRole="Show" ToRole="Show_cactus" />
+        </EntityType>
+        <EntityType Name="Show_cactus">
+          <Key>
+            <PropertyRef Name="Id_sc" />
+          </Key>
+          <Property Name="Id_sc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_show" Type="Int32" />
+          <Property Name="Id_cactus" Type="Int32" />
+          <Property Name="Prize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cactus" Relationship="Self.FK_Show_cactus_Cactus" FromRole="Show_cactus" ToRole="Cactus" />
+          <NavigationProperty Name="Show" Relationship="Self.FK_Show_cactus_Show" FromRole="Show_cactus" ToRole="Show" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Cactus_Kind">
+          <End Role="Kind" Type="Self.Kind" Multiplicity="0..1" />
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kind">
+              <PropertyRef Name="Id_kind" />
+            </Principal>
+            <Dependent Role="Cactus">
+              <PropertyRef Name="Id_kind" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Show_cactus_Cactus">
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Show_cactus" Type="Self.Show_cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cactus">
+              <PropertyRef Name="Id_cactus" />
+            </Principal>
+            <Dependent Role="Show_cactus">
+              <PropertyRef Name="Id_cactus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Show_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Show" Type="Self.Show" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id_loc" />
+            </Principal>
+            <Dependent Role="Show">
+              <PropertyRef Name="Id_loc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Show_cactus_Show">
+          <End Role="Show" Type="Self.Show" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Show_cactus" Type="Self.Show_cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Show">
+              <PropertyRef Name="Id_show" />
+            </Principal>
+            <Dependent Role="Show_cactus">
+              <PropertyRef Name="Id_show" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Kaktus_vistavkaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cactus" EntityType="Self.Cactus" />
+          <EntitySet Name="Kind" EntityType="Self.Kind" />
+          <EntitySet Name="Location" EntityType="Self.Location" />
+          <EntitySet Name="Show" EntityType="Self.Show" />
+          <EntitySet Name="Show_cactus" EntityType="Self.Show_cactus" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Cactus_Kind" Association="Self.FK_Cactus_Kind">
+            <End Role="Kind" EntitySet="Kind" />
+            <End Role="Cactus" EntitySet="Cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Show_cactus_Cactus" Association="Self.FK_Show_cactus_Cactus">
+            <End Role="Cactus" EntitySet="Cactus" />
+            <End Role="Show_cactus" EntitySet="Show_cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Show_Location" Association="Self.FK_Show_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Show" EntitySet="Show" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Show_cactus_Show" Association="Self.FK_Show_cactus_Show">
+            <End Role="Show" EntitySet="Show" />
+            <End Role="Show_cactus" EntitySet="Show_cactus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Kaktus_vistavkaModelContainer" CdmEntityContainer="Kaktus_vistavkaEntities">
+          <EntitySetMapping Name="Cactus">
+            <EntityTypeMapping TypeName="Kaktus_vistavkaModel.Cactus">
+              <MappingFragment StoreEntitySet="Cactus">
+                <ScalarProperty Name="Id_cactus" ColumnName="Id_cactus" />
+                <ScalarProperty Name="Id_kind" ColumnName="Id_kind" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kind">
+            <EntityTypeMapping TypeName="Kaktus_vistavkaModel.Kind">
+              <MappingFragment StoreEntitySet="Kind">
+                <ScalarProperty Name="Id_kind" ColumnName="Id_kind" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Instruction" ColumnName="Instruction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="Kaktus_vistavkaModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Id_loc" ColumnName="Id_loc" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Show">
+            <EntityTypeMapping TypeName="Kaktus_vistavkaModel.Show">
+              <MappingFragment StoreEntitySet="Show">
+                <ScalarProperty Name="Id_show" ColumnName="Id_show" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id_loc" ColumnName="Id_loc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Show_cactus">
+            <EntityTypeMapping TypeName="Kaktus_vistavkaModel.Show_cactus">
+              <MappingFragment StoreEntitySet="Show_cactus">
+                <ScalarProperty Name="Id_sc" ColumnName="Id_sc" />
+                <ScalarProperty Name="Id_show" ColumnName="Id_show" />
+                <ScalarProperty Name="Id_cactus" ColumnName="Id_cactus" />
+                <ScalarProperty Name="Prize" ColumnName="Prize" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Kaktus_vistavkaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
